@@ -47,7 +47,6 @@ class LastfmAPI
             sk: this.getSessionKey(),
             tags: tags,
             token: this.getToken()
-            
         }
 
         let body = {

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="Js/news-api.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <ul id="news">
+
+        </ul>
+    </div>
+    
+</body>
+<script>
+    console.log("YES");
+    artistNews = [];
+    const news = new NewsAPI("743874e824444e1c9cd34e35356c3ae7");
+    news.getArtistNews("Drake").then(res => res.json()).then(resJson =>
+    {
+        console.log("RUNNING");
+        var listItems = "";
+        for(let i = 0 ; i < 2 ; i++ )
+        {
+            let artistWithoutSpaces = resJson.articles[i].source.name.replace(' ', '');
+            artistNews.push(resJson.articles[i].url);
+            listItems += `<li class=${artistWithoutSpaces}><a href = "${resJson.articles[i].url}">${resJson.articles[i].url}</a></li>`
+        }
+        console.log(artistNews);
+        document.getElementById('news').innerHTML = listItems;
+    });
+</script>
+</html>
