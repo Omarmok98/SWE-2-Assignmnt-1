@@ -5,7 +5,7 @@ class LastfmAPI
         this.apiKey = apiKey;
         this.baseUrl = "http://ws.audioscrobbler.com";
         
-        this.loginLink = `http://www.last.fm/api/auth/?api_key=${this.apiKey}&cb=http://localhost:5500/lastfm.html`;
+        this.loginLink = `http://www.last.fm/api/auth/?api_key=${this.apiKey}&cb=http://localhost:5500/index.html`;
     }
 
     getTopArtists()
@@ -43,12 +43,10 @@ class LastfmAPI
         let obj = {
             api_key: this.apiKey,
             artist: artistName,
-
             method: "artist.addTags",
             sk: this.getSessionKey(),
             tags: tags,
             token: this.getToken()
-            
         }
 
         let body = {
