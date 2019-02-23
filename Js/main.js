@@ -42,12 +42,16 @@ if(urlParams.has("token"))
                 <br>
                 <br>
             </li>`
+            console.log("BEFORE",jsonResponse.artists.artist[i].name);
             news.getArtistNews(jsonResponse.artists.artist[i].name).then(res => res.json()).then(resJson =>
-            {
-                for(let i = 0 ; i < 2 ; i++ )
+            {   
+                console.log("AFTER",jsonResponse.artists.artist[i].name);
+                for(let j = 0 ; j < 2 ; j++ )
                 {
-                    let articles = resJson.articles[i].source.name.replace(' ', '');
-                    listArtistNews += `<li class=${articles}><a href = "${resJson.articles[i].url}">${resJson.articles[i].url}</a></li>`
+                    let articles = resJson.articles[j].source.name.replace(' ', '');
+                    listArtistNews += `<strong>${jsonResponse.artists.artist[i].name}</strong><br>
+                    <li class=${articles}><a href = "${resJson.articles[j].url}">${resJson.articles[j].url}</a></li>`
+                    
                 }
                 listArtistNews += `<br>`;
                 document.getElementById('news').innerHTML = listArtistNews;
