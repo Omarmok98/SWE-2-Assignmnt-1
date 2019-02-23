@@ -15,9 +15,10 @@ class LastfmAPI
         return fetch(url);
     }
 
-    getTopAlbums()
+    getTopAlbums(artist)
     {
-
+        let url = `${this.baseUrl}/2.0/?method=artist.gettopalbums&artist=${artist}&api_key=${this.apiKey}&format=json`;
+        return fetch(url);
     }
 
     saveToken(token)
