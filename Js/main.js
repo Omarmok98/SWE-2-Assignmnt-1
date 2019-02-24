@@ -29,23 +29,26 @@ if(urlParams.has("token"))
         var listTopAlbums = "";
         for(let i = 0; i < 5; i++)
         {
+            
             let artistWithoutSpaces = jsonResponse.artists.artist[i].name.replace(' ', '');
-            lastfmAPI.getArtistTags(jsonResponse.artists.artist[i].name).then(res => res.json()).then(resJson => {
-                console.log(jsonResponse.artists.artist[i].name, resJson);  //de betget el tags 3awzak te5ale yedisplay fel html
-            }).catch(err => {
-                console.log(err);
-            })
+            artists.push(jsonResponse.artists.artist[i].name);
             listItems += 
             `<li id=${artistWithoutSpaces}>
                 <b>${jsonResponse.artists.artist[i].name}</b>
+                <input placeholder = "tag name" type = "text" id = "${artistWithoutSpaces}-text"></input>
+                <button id="${artistWithoutSpaces}-btn">add tag</button>
                 <br>
                 <br>
             </li>`;
+           
 
-            lastfmAPI.addArtistTags(artistWithoutSpaces,"test")//.then(res => console.log(res))
-            .catch(err => {       
+            lastfmAPI.getArtistTags(jsonResponse.artists.artist[i].name).then(res => res.json()).then(resJson => {
+                console.log(jsonResponse.artists.artist[i].name, resJson);  
+            }).catch(err => {
                 console.log(err);
-            });
+            })
+            
+            
             lastfmAPI.getTopAlbums(jsonResponse.artists.artist[i].name).then(res => res.json()).then(resJson =>
             {
                 for(let x = 0 ; x < 2 ; x++ )
@@ -79,27 +82,40 @@ if(urlParams.has("token"))
                 document.getElementById('gif').innerHTML = listArtistGIF; 
                 
             });
-            /*document.getElementById("top-artists").onload = function()
-            {
-                console.log("load");
-                alert("LOADED");
-                var addTagBtn = document.getElementById(`${artistWithoutSpaces}-btn`);
-                addTagBtn.addEventListener("click",function()
-                {   
-                    alert("clicked"); 
-                    var tagArea = document.getElementById(`${artistWithoutSpaces}-text`).value;
-                    console.log(tagArea);
-                    
-                });
-            };*/
         };
         document.getElementById("top-artists").innerHTML = listItems;
-        
+
+        for(let i = 0; i < 5; i++)
+        {
+            var addTagBtn = document.getElementById(`${artists[i].replace(' ', '')}-btn`);
+            addTagBtn.addEventListener("click",function()
+            {   
+                console.log("clicked"); 
+                var tagArea = document.getElementById(`${artists[i].replace(' ', '')}-text`).value;
+                console.log(tagArea);
+                lastfmAPI.addArtistTags(artists[i],tagArea).then(res => console.log(res))
+                .catch(err => {       
+                    console.log(err);
+                }); 
+                
+            });
+        }
 
 
     }).catch(err => {
         console.log(err);
     });
+
+
+    window.onload = function()
+    {
+        console.log("load");
+       
+
+    };
+
+
+
 }
 
 
