@@ -85,9 +85,9 @@ class LastfmAPI
             string += Object.keys(obj)[i] + obj[Object.keys(obj)[i]]
         }
         string += "f4455cd43a01eb531c9bfa03595ad5b3";
-        console.log(string);
+        //console.log(string);
         string = MD5(unescape(encodeURIComponent(string)))
-        console.log(string);
+        //console.log(string);
         return string;
     }
 
@@ -106,7 +106,7 @@ class LastfmAPI
             }
             
         }
-        console.log(string)
+        //console.log(string)
         return string;
     }
 

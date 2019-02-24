@@ -30,6 +30,22 @@ if(urlParams.has("token"))
         for(let i = 0; i < 5; i++)
         {
             let artistWithoutSpaces = jsonResponse.artists.artist[i].name.replace(' ', '');
+            lastfmAPI.getArtistTags(jsonResponse.artists.artist[i].name).then(res => res.json()).then(resJson => {
+                console.log(jsonResponse.artists.artist[i].name, resJson);  //de betget el tags 3awzak te5ale yedisplay fel html
+            }).catch(err => {
+                console.log(err);
+            })
+            listItems += 
+            `<li id=${artistWithoutSpaces}>
+                <b>${jsonResponse.artists.artist[i].name}</b>
+                <br>
+                <br>
+            </li>`;
+
+            lastfmAPI.addArtistTags(artistWithoutSpaces,"test")//.then(res => console.log(res))
+            .catch(err => {       
+                console.log(err);
+            });
             lastfmAPI.getTopAlbums(jsonResponse.artists.artist[i].name).then(res => res.json()).then(resJson =>
             {
                 for(let x = 0 ; x < 2 ; x++ )
@@ -42,24 +58,8 @@ if(urlParams.has("token"))
                 document.getElementById('top-albums').innerHTML = listTopAlbums;
                 
             });
-            lastfmAPI.getArtistTags(jsonResponse.artists.artist[i].name).then(res => res.json()).then(resJson => {
-                console.log(jsonResponse.artists.artist[i].name, resJson);  //de betget el tags 3awzak te5ale yedisplay fel html
-            }).catch(err => {
-                console.log(err);
-            })
-            listItems += 
-            `<li id=${artistWithoutSpaces}>
-                <b>${jsonResponse.artists.artist[i].name}</b>   
-                
-                <input id="inputs" placeholder = "tag name" type = "text" id = "${artistWithoutSpaces}-text" readonly></input>
-                <button id="${artistWithoutSpaces}-btn" style="margin-right: 250px" style="left: 500px" style="margin: 100px">add tag</button>
-                <br>
-                <br>
-            </li>`
-            //console.log("BEFORE",jsonResponse.artists.artist[i].name);
             news.getArtistNews(jsonResponse.artists.artist[i].name).then(res => res.json()).then(resJson =>
             {   
-               // console.log("AFTER",jsonResponse.artists.artist[i].name);
                 for(let j = 0 ; j < 2 ; j++ )
                 {
                     let articles = resJson.articles[j].source.name.replace(' ', '');
@@ -73,23 +73,33 @@ if(urlParams.has("token"))
 
             gif.getArtistGIF(jsonResponse.artists.artist[i].name).then(res => res.json()).then(resJson =>
             {
-                console.log(jsonResponse.artists.artist[i].name);
-                console.log("SRC",resJson.data[0].images.fixed_width.url);
                 listArtistGIF += `<strong>${jsonResponse.artists.artist[i].name}</strong><br>
                 <img class="GIF" src="${resJson.data[0].images.fixed_width.url}"`
                 listArtistGIF += `<br>`;
                 document.getElementById('gif').innerHTML = listArtistGIF; 
                 
             });
-        }
+            /*document.getElementById("top-artists").onload = function()
+            {
+                console.log("load");
+                alert("LOADED");
+                var addTagBtn = document.getElementById(`${artistWithoutSpaces}-btn`);
+                addTagBtn.addEventListener("click",function()
+                {   
+                    alert("clicked"); 
+                    var tagArea = document.getElementById(`${artistWithoutSpaces}-text`).value;
+                    console.log(tagArea);
+                    
+                });
+            };*/
+        };
         document.getElementById("top-artists").innerHTML = listItems;
         
- /*       lastfmAPI.addArtistTags("Ariana Grande", "rock,shit").then(res => console.log(res)).catch(err => { //de enta zabtha w 7otlha addevent listener de ta2reban hateb2 as3ab 7aga
-            console.log(err);
-        });*/
+
 
     }).catch(err => {
         console.log(err);
     });
 }
+
 
