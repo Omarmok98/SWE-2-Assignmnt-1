@@ -1,4 +1,1 @@
-# SWE-2-Assignmnt-1
-Important:
-PLEASE READ THE DOCUMENTATION
-HERE IS THE BLOODY URL https://www.last.fm/api/intro
+In order to use this api the user must have an LAST fm account that can add tags 
